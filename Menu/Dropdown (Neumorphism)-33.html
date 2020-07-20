@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown (Neumorphism)</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Roboto:300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  font-family: 'Roboto',sans-serif;
+}
+
+#wrapper {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  position: relative;
+  background: #f2f3f7;
+  display: flex;
+  justify-content: center;
+}
+#wrapper .location-container {
+  width: 350px;
+  margin-top: 80px;
+  padding: 20px 30px;
+  border-radius: 5px;
+  height: 50px;
+  overflow: hidden;
+  transition: all ease 0.5s;
+}
+#wrapper .location-container.opened {
+  height: min-content;
+  transition: all ease 0.5s;
+}
+#wrapper .location-container .container--header {
+  width: 100%;
+  height: 50px;
+}
+#wrapper .location-container .container--header #location--header {
+  font-family: 'Roboto';
+  margin-bottom: 30px;
+  font-size: 25px;
+  letter-spacing: 0.8px;
+  float: left;
+  line-height: 50px;
+  font-weight: 600;
+}
+#wrapper .location-container .container--header .drop-arrow {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: right;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+#wrapper .location-container .container--header .drop-arrow .arrow-icon {
+  font-weight: 300;
+}
+#wrapper .location-container .container--header .drop-arrow .arrow-icon i {
+  font-size: 28px;
+  line-height: 50px;
+}
+#wrapper .location-container .container--header .drop-arrow.button--pushed {
+  background: #2cffd5;
+  box-shadow: inset 5px 2px 5px #00d885,inset -5px -2px 5px #b9fff1;
+  transition: all ease 0.2s;
+}
+#wrapper .location-container .container--header .drop-arrow.button--pushed .arrow-icon {
+  color: white;
+  text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.8);
+}
+#wrapper .location-container .location {
+  height: 65px;
+  margin: 30px 0;
+  border-radius: 15px;
+}
+#wrapper .location-container .location:nth-of-type(1) {
+  margin-top: 0px;
+}
+#wrapper .location-container .location:last-of-type {
+  margin-bottom: 10px;
+}
+#wrapper .location-container .location p {
+  line-height: 65px;
+  text-align: left;
+  padding-left: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Roboto';
+  transition: all ease 0.5s;
+  letter-spacing: 0.8px;
+}
+#wrapper .light {
+  background: #F2F3F7;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+}
+#wrapper .light .container--header #location--header {
+  color: rgba(0, 0, 0, 0.5);
+}
+#wrapper .light .container--header #location--header.active {
+  color: #08FACB;
+  text-shadow: 0px 0px 2px #08facabd;
+}
+#wrapper .light .container--header .drop-arrow {
+  background: #F2F3F7;
+  box-shadow: -3px -1px 5px #FFFFFF, 3px 1px 5px #C4C4C4;
+}
+#wrapper .light .container--header .drop-arrow .arrow-icon {
+  color: rgba(0, 0, 0, 0.3);
+}
+#wrapper .light .location {
+  background: #F2F3F7;
+  box-shadow: -3px -2px 5px #FFFFFF,3px 2px 5px #C4C4C4;
+}
+#wrapper .light .location p {
+  color: rgba(0, 0, 0, 0.5);
+}
+#wrapper .light .location.location--selected {
+  box-shadow: inset -3px -2px 5px #FFFFFF, inset 3px 2px 5px #C4C4C4;
+}
+#wrapper .light .location.location--selected p {
+  color: #08FACB;
+  text-shadow: 0px 0px 2px #08facabd;
+}
+#wrapper .dark {
+  background: #545454;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+}
+#wrapper .dark .container--header #location--header {
+  color: rgba(255, 255, 255, 0.5);
+}
+#wrapper .dark .container--header #location--header.active {
+  color: #08FACB;
+  text-shadow: 0px 0px 2px #08facabd;
+}
+#wrapper .dark .container--header .drop-arrow {
+  background: #545454;
+  box-shadow: -3px -1px 5px #747474, 3px 1px 5px #242424;
+}
+#wrapper .dark .container--header .drop-arrow .arrow-icon {
+  color: rgba(255, 255, 255, 0.5);
+}
+#wrapper .dark .location {
+  background: #545454;
+  box-shadow: -3px -2px 5px #747474,3px 2px 5px #242424;
+}
+#wrapper .dark .location p {
+  color: rgba(255, 255, 255, 0.5);
+}
+#wrapper .dark .location.location--selected {
+  box-shadow: inset -3px -2px 5px #747474, inset 3px 2px 5px #242424;
+}
+#wrapper .dark .location.location--selected p {
+  color: #08FACB;
+  text-shadow: 0px 0px 2px #08facabd;
+}
+
+#light-dark-mode {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+}
+#light-dark-mode .switch {
+  display: inline-block;
+  width: 80px;
+  height: 44px;
+}
+#light-dark-mode .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+#light-dark-mode .switch input:checked + .slider {
+  background-color: #F2F3F7;
+  box-shadow: inset -3px -2px 5px #FFFFFF, inset 3px 2px 5px #C4C4C4;
+}
+#light-dark-mode .switch input:checked + .slider:before {
+  background-color: #545454;
+  box-shadow: inset -2px -1px 3px #747474, inset 2px 1px 3px #242424;
+}
+#light-dark-mode .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #545454;
+  box-shadow: inset -3px -2px 5px #747474, inset 3px 2px 5px #242424;
+  transition: all ease 0.4s;
+  border-radius: 34px;
+}
+#light-dark-mode .slider:before {
+  position: absolute;
+  content: "";
+  height: 36px;
+  width: 36px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #F2F3F7;
+  box-shadow: inset -2px -1px 3px #FFFFFF, inset 2px 1px 3px #C4C4C4;
+  transition: all ease 0.5s;
+  border-radius: 50%;
+}
+
+input:checked + .slider:before {
+  transform: translateX(36px);
+}
+
+
+</style>      
+</head>
+<body>
+ <div id="wrapper">
+  <div class="location-container dark">
+    <div class="container--header">
+      <h3 id="location--header" class="">Web <span>Design</span></h3>
+      <div class="drop-arrow"><span class="arrow-icon"><i class="material-icons">expand_more</i></span></div>
+    </div>
+    <div class="location location--selected"><p>HTML5</p></div>
+    <div class="location" location="CSS3"><p>CSS3</p></div>
+    <div class="location" location="javascript"><p>javascript</p></div>
+  </div> 
+  <div id="light-dark-mode">
+    <label class="switch">
+      <input id="switchBox" type="checkbox">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>   
+
+<script>
+let locationButtons = document.getElementsByClassName('location');
+console.log(locationButtons[0])
+
+Array.from(locationButtons).forEach(function(locationButtons) {
+  locationButtons.addEventListener('click', pressedLocation);
+});
+
+function pressedLocation(el){
+  console.log(this)
+  document.getElementsByClassName('location--selected')[0].classList.remove('location--selected');
+  this.classList.add('location--selected');
+}
+
+document.getElementsByClassName('drop-arrow')[0].addEventListener('click', dropButton);
+
+function dropButton(el){
+  this.classList.toggle('button--pushed');
+  document.getElementsByClassName('location-container')[0].classList.toggle('opened');
+  document.getElementById('location--header').classList.toggle('active')
+}
+
+document.getElementById('switchBox').addEventListener('click', function(){
+  let mainContainer = document.getElementsByClassName('location-container')[0];
+  mainContainer.classList.toggle('dark');
+  mainContainer.classList.toggle('light');
+})    
+</script>
+</body>
+</html>
